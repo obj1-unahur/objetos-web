@@ -9,6 +9,7 @@ import {
 	PATH_CONTRATO_PEDAGOGICO,
 	PATH_VIDEOS,
 	PATH_MATERIAL,
+	PATH_PERFIL,
 } from '@/paths'
 import KeycloakComponent from './Keycloak'
 import AuthCheck from './AuthCheck.jsx' // Asegúrate de ajustar la ruta de importación según tu estructura de carpetas
@@ -48,7 +49,7 @@ import AuthCheck from './AuthCheck.jsx' // Asegúrate de ajustar la ruta de impo
 				</li>
 				<AuthCheck client:only>
 					<li class="submenu-item">
-						<a href="/mi-perfil">Mi perfil</a>
+						<a href={PATH_PERFIL}>Mi perfil</a>
 					</li>
 				</AuthCheck>
 			</ul>
