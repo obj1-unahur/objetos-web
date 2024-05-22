@@ -11,6 +11,7 @@ import {
 	PATH_MATERIAL,
 } from '@/paths'
 import KeycloakComponent from './Keycloak'
+import AuthCheck from './AuthCheck.jsx' // Asegúrate de ajustar la ruta de importación según tu estructura de carpetas
 ---
 
 <header>
@@ -45,10 +46,15 @@ import KeycloakComponent from './Keycloak'
 						>Wollok docs</a
 					>
 				</li>
+				<AuthCheck client:only>
+					<li class="submenu-item">
+						<a href="/mi-perfil">Mi perfil</a>
+					</li>
+				</AuthCheck>
 			</ul>
-			<li class="menu-item">
-				<KeycloakComponent client:visible />
-			</li>
+		</li>
+		<li class="menu-item">
+			<KeycloakComponent client:visible />
 		</li>
 		<li class="menu-item type-icon">
 			<a

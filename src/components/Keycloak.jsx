@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Keycloak from 'keycloak-js'
+import AuthCheck from './AuthCheck.jsx'
 
 const KeycloakComponent = () => {
 	const [keycloak, setKeycloak] = useState(null)
@@ -23,6 +24,7 @@ const KeycloakComponent = () => {
 			.then((auth) => {
 				setKeycloak(kc)
 				setAuthenticated(auth)
+				localStorage.setItem('authenticated', auth)
 				if (auth) {
 					console.info('Authenticated')
 					console.log('auth', auth)
@@ -54,6 +56,12 @@ const KeycloakComponent = () => {
 			keycloak.logout()
 		}
 	}
+
+	useEffect(() => {
+		localStorage.setItem('authenticated', authenticated)
+		window.dispatchEvent(new Event('storage'))
+	}, [authenticated])
+
 	return (
 		<div>
 			{authenticated ? (
