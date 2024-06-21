@@ -2,9 +2,8 @@
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import Hero from '@components/Hero.astro'
 import CardSecciones from '@/components/CardSecciones.astro'
-import { PATH_CURSADA } from '@/paths.js'
+import { PATH_CURSADA, PATH_MATERIAL } from '@/paths.js'
 import { Icon } from 'astro-icon/components'
-import KeycloakComponent from '../components/Keycloak'
 ---
 
 <DefaultLayout
@@ -35,7 +34,7 @@ import KeycloakComponent from '../components/Keycloak'
 				<p class="text-center">
 					Si ya viniste varias veces, probablemente quieras ir a la sección <a
 						href={PATH_CURSADA}>cursada</a
-					> o ver el <a href="">material</a> que tenemos disponible.
+					> o ver el <a href={PATH_MATERIAL}>material</a> que tenemos disponible.
 				</p>
 			</CardSecciones>
 			<div class="m-auto mt-6 text-center">

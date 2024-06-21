@@ -1,0 +1,9 @@
+---
+import DefaultLayout from '@/layouts/DefaultLayout.astro'
+import { getSession } from 'auth-astro/server'
+const session = await getSession(Astro.request)
+---
+
+<DefaultLayout title="Perfil">
+	<h1>Hola {session.user.name}</h1>
+</DefaultLayout>

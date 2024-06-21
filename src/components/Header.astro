@@ -2,22 +2,24 @@
 import Navigation from '@components/Navigation.astro'
 import { SkipLinks } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
-
 import {
-	PATH,
+	PATH_INICIO,
 	PATH_CURSADA,
 	PATH_CONTRATO_PEDAGOGICO,
 	PATH_VIDEOS,
 	PATH_MATERIAL,
+	PATH_PERFIL,
 } from '@/paths'
-import KeycloakComponent from './Keycloak'
+import { SignIn, SignOut } from 'auth-astro/components'
+import { getSession } from 'auth-astro/server'
+const session = await getSession(Astro.request)
 ---
 
 <header>
 	<SkipLinks />
 	<Navigation>
 		<li class="menu-item">
-			<a href={PATH}>Inicio</a>
+			<a href={PATH_INICIO}>Inicio</a>
 		</li>
 		<li class="menu-item">
 			<a href={PATH_CURSADA}>Cursada</a>
@@ -45,9 +47,26 @@ import KeycloakComponent from './Keycloak'
 						>Wollok docs</a
 					>
 				</li>
+				{
+					session ? (
+						<li class="submenu-item">
+							<a href={PATH_PERFIL}>Mi perfil</a>
+						</li>
+					) : (
+						<>
+							<p />
+						</>
+					)
+				}
 			</ul>
 			<li class="menu-item">
-				<KeycloakComponent client:visible />
+				{
+					session ? (
+						<SignOut>Cerrar secion</SignOut>
+					) : (
+						<SignIn provider="keycloak">Iniciar secion</SignIn>
+					)
+				}
 			</li>
 		</li>
 		<li class="menu-item type-icon">

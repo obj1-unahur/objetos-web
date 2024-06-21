@@ -4,6 +4,7 @@ docker
 # dependencies
 node_modules/
 .snowpack/
+.vercel
 
 # logs
 npm-debug.log*
