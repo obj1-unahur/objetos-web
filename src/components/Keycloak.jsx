@@ -1,47 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import Keycloak from 'keycloak-js'
-import AuthCheck from './AuthCheck.jsx'
+import Cookies from 'js-cookie'
 
 const KeycloakComponent = () => {
 	const [keycloak, setKeycloak] = useState(null)
 	const [authenticated, setAuthenticated] = useState(false)
-	const [userName, setUserName] = useState('')
 
 	useEffect(() => {
-		const initOptions = {
-			url: 'http://localhost:8080/',
+		const kc = new Keycloak({
+			url: 'http://localhost:8080/', // Ajusta esta URL según tu configuración
 			realm: 'UNAHUR',
-			clientId: 'front',
-		}
-
-		const kc = new Keycloak(initOptions)
-
-		kc.init({
-			onLoad: 'check-sso',
-			checkLoginIframe: true,
-			pkceMethod: 'S256',
+			clientId: 'front2',
 		})
+
+		kc.init({})
 			.then((auth) => {
 				setKeycloak(kc)
-				setAuthenticated(auth)
-				localStorage.setItem('authenticated', auth)
+				setAuthenticated(auth) // Actualiza el estado de autenticación
 				if (auth) {
-					console.info('Authenticated')
-					console.log('auth', auth)
-					console.log('Keycloak', kc)
-					console.log('Access Token', kc.token)
-
-					kc.loadUserProfile()
-						.then((profile) => {
-							setUserName(profile.username)
-						})
-						.catch((error) => {
-							console.error('Error loading user profile:', error)
-						})
+					Cookies.set('authenticated', 'true', { expires: 1 })
+					Cookies.set('accessToken', kc.token, { expires: 1 })
+				} else {
+					Cookies.remove('authenticated')
+					Cookies.remove('accessToken')
 				}
 			})
-			.catch(() => {
-				console.error('Authentication Failed')
+			.catch((error) => {
+				console.error('Authentication Failed:', error)
 			})
 	}, [])
 
@@ -53,14 +38,19 @@ const KeycloakComponent = () => {
 
 	const handleLogout = () => {
 		if (keycloak) {
-			keycloak.logout()
+			keycloak
+				.logout()
+				.then(() => {
+					Cookies.remove('authenticated')
+					Cookies.remove('accessToken')
+					setAuthenticated(false) // Actualiza el estado de autenticación
+					window.location.reload() // Recarga la página para actualizar la interfaz
+				})
+				.catch((error) => {
+					console.error('Logout Failed:', error)
+				})
 		}
 	}
-
-	useEffect(() => {
-		localStorage.setItem('authenticated', authenticated)
-		window.dispatchEvent(new Event('storage'))
-	}, [authenticated])
 
 	return (
 		<div>

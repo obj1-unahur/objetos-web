@@ -1,6 +1,6 @@
-export const PATH = '/objetos-web'
-export const PATH_CURSADA = `${PATH}/Cursada`
-export const PATH_CONTRATO_PEDAGOGICO = `${PATH}/contrato-pedagogico`
-export const PATH_VIDEOS = `${PATH}/Videos`
-export const PATH_MATERIAL = `${PATH}/material`
-export const PATH_PERFIL = `${PATH}/mi-perfil`
+export const PATH = '/'
+export const PATH_CURSADA = `Cursada`
+export const PATH_CONTRATO_PEDAGOGICO = `contrato-pedagogico`
+export const PATH_VIDEOS = `Videos`
+export const PATH_MATERIAL = `material`
+export const PATH_PERFIL = `mi-perfil`

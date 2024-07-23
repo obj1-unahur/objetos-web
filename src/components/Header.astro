@@ -47,16 +47,16 @@ import AuthCheck from './AuthCheck.jsx' // Asegúrate de ajustar la ruta de impo
 						>Wollok docs</a
 					>
 				</li>
-				<AuthCheck client:only>
+				<AuthCheck client:only="react">
 					<li class="submenu-item">
 						<a href={PATH_PERFIL}>Mi perfil</a>
 					</li>
 				</AuthCheck>
 			</ul>
 		</li>
-		<li class="menu-item">
-			<KeycloakComponent client:visible />
-		</li>
+
+		<KeycloakComponent client:only />
+
 		<li class="menu-item type-icon">
 			<a
 				href="https://github.com/obj1-unahur/objetos-web"

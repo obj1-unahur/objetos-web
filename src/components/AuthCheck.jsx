@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react'
+import Cookies from 'js-cookie'
 
 const AuthCheck = ({ children }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false)
 
 	useEffect(() => {
-		const handleStorageChange = () => {
-			const storedAuth = localStorage.getItem('authenticated') === 'true'
+		const handleCookieChange = () => {
+			const storedAuth = Cookies.get('authenticated') === 'true'
 			setIsAuthenticated(storedAuth)
 		}
-		handleStorageChange()
-		window.addEventListener('storage', handleStorageChange)
+		handleCookieChange()
+		window.addEventListener('cookiechange', handleCookieChange)
 		return () => {
-			window.removeEventListener('storage', handleStorageChange)
+			window.removeEventListener('cookiechange', handleCookieChange)
 		}
 	}, [])
 
