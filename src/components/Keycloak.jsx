@@ -7,19 +7,26 @@ const KeycloakComponent = () => {
 	const [authenticated, setAuthenticated] = useState(false)
 
 	useEffect(() => {
+		const token = Cookies.get('accessToken')
+		const authenticatedCookie = Cookies.get('authenticated')
+
 		const kc = new Keycloak({
-			url: 'http://localhost:8080/', // Ajusta esta URL según tu configuración
+			url: 'http://localhost:8080/',
 			realm: 'UNAHUR',
 			clientId: 'front2',
 		})
 
-		kc.init({})
+		kc.init({
+			onLoad: 'check-sso',
+			token,
+			checkLoginIframe: false,
+		})
 			.then((auth) => {
 				setKeycloak(kc)
-				setAuthenticated(auth) // Actualiza el estado de autenticación
+				setAuthenticated(auth)
 				if (auth) {
-					Cookies.set('authenticated', 'true', { expires: 1 })
-					Cookies.set('accessToken', kc.token, { expires: 1 })
+					Cookies.set('authenticated', 'true')
+					Cookies.set('accessToken', kc.token)
 				} else {
 					Cookies.remove('authenticated')
 					Cookies.remove('accessToken')
@@ -43,8 +50,7 @@ const KeycloakComponent = () => {
 				.then(() => {
 					Cookies.remove('authenticated')
 					Cookies.remove('accessToken')
-					setAuthenticated(false) // Actualiza el estado de autenticación
-					window.location.reload() // Recarga la página para actualizar la interfaz
+					setAuthenticated(false)
 				})
 				.catch((error) => {
 					console.error('Logout Failed:', error)

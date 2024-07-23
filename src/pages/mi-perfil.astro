@@ -1,26 +1,5 @@
 ---
-import AsideMenu from '@/components/AsideMenu.astro'
-import CardSecciones from '@/components/CardSecciones.astro'
-import SeccionListaCopyCode from '@/components/SeccionListaCopyCode.astro'
-import Separador from '@/components/Separador.astro'
-import TablaDeActividades from '@/components/TablaDeActividades.astro'
 import DefaultLayout from '@/layouts/DefaultLayout.astro'
-import { Icon } from 'astro-icon/components'
-import Wollok from '../content/Wollok.json'
-import Git from '../content/Git.json'
-import Ejercicios from '../content/Ejercicios.json'
-
-const elementosComunes = await Astro.glob(
-	'../content/sintaxis_basica_wollok.md'
-)
-const {
-	sintaxisBasica,
-	operadoresLogicosYMatematicos,
-	opSimplesCollList,
-	opAvanCollList,
-	mensajeDeColl,
-	comandosBasicGit,
-} = elementosComunes[0].frontmatter
 ---
 
 <DefaultLayout title="Mi Perfil">
